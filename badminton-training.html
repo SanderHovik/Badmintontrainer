@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shuttle Academy — Badminton Training Plans</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1f14;--surface:#122019;--surface2:#192d20;--border:#1f3628;
+  --accent:#f5c518;--accent2:#4ade80;--accent3:#f97316;--blue:#60a5fa;
+  --text:#f0faf4;--muted:#6b9a78;--danger:#f87171;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;top:0;left:50%;transform:translateX(-50%);width:1px;height:100%;background:linear-gradient(to bottom,transparent,rgba(245,197,24,0.06),transparent);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;}
+
+/* HEADER */
+header{padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--accent);background:linear-gradient(135deg,#0a1a10,#0d2016);position:sticky;top:0;z-index:200;box-shadow:0 2px 24px rgba(0,0,0,0.5);}
+.logo-wrap{display:flex;align-items:center;gap:14px;}
+.logo-shuttle{width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 16px rgba(245,197,24,0.4);flex-shrink:0;}
+.logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;letter-spacing:2px;text-transform:uppercase;}
+.logo-text span{color:var(--accent);}
+.logo-text em{font-style:normal;color:var(--text);}
+.header-nav{display:flex;align-items:center;gap:8px;}
+.nav-btn{background:rgba(245,197,24,0.08);border:1px solid rgba(245,197,24,0.25);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:6px 14px;border-radius:100px;letter-spacing:1px;cursor:pointer;transition:all 0.18s;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent);color:#0d1f14;}
+
+/* HERO */
+.hero{padding:60px 40px 40px;position:relative;overflow:hidden;max-width:1100px;}
+.hero-deco{position:absolute;right:40px;top:20px;font-size:120px;opacity:0.06;transform:rotate(-30deg);pointer-events:none;user-select:none;}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--accent2);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';width:24px;height:2px;background:var(--accent2);border-radius:2px;}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(52px,8vw,96px);font-weight:900;line-height:0.9;letter-spacing:-1px;text-transform:uppercase;margin-bottom:20px;}
+.hero h1 .line1{color:var(--text);display:block;}
+.hero h1 .line2{color:var(--accent);display:block;}
+.hero h1 .line3{color:var(--accent2);display:block;}
+.hero-sub{font-size:15px;color:var(--muted);max-width:500px;line-height:1.65;font-weight:300;}
+.hero-stripe{height:4px;background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 50%,transparent 100%);margin:32px 0 0;border-radius:2px;}
+
+/* CONFIGURATOR */
+.configurator{padding:0 40px 80px;display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1100px;}
+.config-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:24px;position:relative;overflow:hidden;}
+.config-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
+.config-card.full-width{grid-column:1/-1;}
+.card-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.card-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-title{font-size:17px;font-weight:600;margin-bottom:18px;color:var(--text);}
+
+.level-options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.level-btn{padding:12px 6px;background:var(--bg);border:2px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.18s;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;}
+.level-btn .lv-icon{font-size:22px;display:block;margin-bottom:5px;}
+.level-btn:hover{border-color:var(--accent);color:var(--text);background:rgba(245,197,24,0.05);}
+.level-btn.active{background:var(--accent);border-color:var(--accent);color:#0d1f14;}
+
+.age-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.age-btn{padding:12px 8px;background:var(--bg);border:2px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.18s;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.age-btn .ag-icon{font-size:20px;}
+.age-btn .ag-range{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);}
+.age-btn:hover{border-color:var(--accent2);color:var(--text);}
+.age-btn.active{border-color:var(--accent2);background:rgba(74,222,128,0.1);color:var(--accent2);}
+.age-desc-box{margin-top:12px;padding:10px 13px;background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.2);border-radius:4px;font-size:12px;color:var(--muted);line-height:1.5;display:none;}
+.age-desc-box.show{display:block;}
+.age-desc-box strong{color:var(--accent2);}
+
+.opt-row{display:flex;gap:8px;}
+.opt-btn{flex:1;padding:10px 4px;background:var(--bg);border:2px solid var(--border);border-radius:5px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.18s;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;}
+.opt-btn:hover{border-color:var(--accent3);color:var(--text);}
+.opt-btn.active{border-color:var(--accent3);background:rgba(249,115,22,0.1);color:var(--accent3);}
+
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+.day-count-btn{padding:14px 4px;background:var(--bg);border:2px solid var(--border);border-radius:5px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.18s;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.day-count-btn .dc-sub{font-family:'Inter',sans-serif;font-size:9px;font-weight:400;color:var(--muted);}
+.day-count-btn:hover{border-color:var(--accent);color:var(--accent);}
+.day-count-btn.active{border-color:var(--accent);background:rgba(245,197,24,0.1);color:var(--accent);}
+
+/* SHOTS */
+.shot-section{margin-bottom:20px;}
+.shot-section-hdr{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.shot-section-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
+.shot-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.shot-btn{padding:10px 4px 8px;background:var(--bg);border:2px solid var(--border);border-radius:5px;cursor:pointer;text-align:center;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.shot-icon{font-size:18px;line-height:1;}
+.shot-name{font-size:10px;font-weight:700;color:var(--text);line-height:1.2;}
+.shot-sub{font-size:9px;color:var(--muted);}
+.shot-attack:hover{border-color:var(--accent3);}.shot-attack:hover .shot-name{color:var(--accent3);}
+.shot-attack.active{border-color:var(--accent3);background:rgba(249,115,22,0.1);}.shot-attack.active .shot-name{color:var(--accent3);}
+.shot-control:hover{border-color:var(--accent2);}.shot-control:hover .shot-name{color:var(--accent2);}
+.shot-control.active{border-color:var(--accent2);background:rgba(74,222,128,0.08);}.shot-control.active .shot-name{color:var(--accent2);}
+.shot-defense:hover{border-color:var(--blue);}.shot-defense:hover .shot-name{color:var(--blue);}
+.shot-defense.active{border-color:var(--blue);background:rgba(96,165,250,0.08);}.shot-defense.active .shot-name{color:var(--blue);}
+.shot-movement:hover{border-color:var(--accent);}.shot-movement:hover .shot-name{color:var(--accent);}
+.shot-movement.active{border-color:var(--accent);background:rgba(245,197,24,0.08);}.shot-movement.active .shot-name{color:var(--accent);}
+.shots-count-bar{margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);display:none;}
+.shots-count-bar.show{display:block;}
+
+.generate-wrap{grid-column:1/-1;display:flex;justify-content:center;padding:8px 0;}
+.generate-btn{background:linear-gradient(135deg,var(--accent) 0%,#e6b800 100%);color:#0d1f14;border:none;font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:3px;text-transform:uppercase;padding:18px 64px;cursor:pointer;border-radius:6px;transition:all 0.2s;display:flex;align-items:center;gap:14px;box-shadow:0 4px 24px rgba(245,197,24,0.3);position:relative;overflow:hidden;}
+.generate-btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.15);transform:translateX(-100%);transition:transform 0.3s;}
+.generate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,197,24,0.45);}
+.generate-btn:hover::after{transform:translateX(0);}
+
+.error-msg{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:4px;padding:12px 16px;color:var(--danger);font-size:13px;margin:0 40px 16px;}
+.error-msg.show{display:block;}
+
+/* LOADING */
+.loading-wrap{display:none;text-align:center;padding:80px 40px;}
+.loading-wrap.show{display:block;}
+.shuttle-spin{font-size:52px;animation:shuttleSpin 1.2s linear infinite;display:block;margin:0 auto 24px;filter:drop-shadow(0 0 16px rgba(245,197,24,0.5));}
+@keyframes shuttleSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.load-txt{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;}
+.load-progress{width:240px;height:3px;background:var(--border);border-radius:100px;margin:16px auto 0;overflow:hidden;}
+.load-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;animation:loadProg 2s ease-in-out infinite;}
+@keyframes loadProg{0%{width:0%;}50%{width:70%;}100%{width:100%;}}
+
+/* RESULTS */
+.results{display:none;padding:0 40px 80px;max-width:1100px;}
+.results.show{display:block;}
+
+.plan-header{margin-bottom:28px;padding:28px 32px;background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:8px;position:relative;overflow:hidden;}
+.plan-header::before{content:'🏸';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:80px;opacity:0.08;pointer-events:none;}
+.plan-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));}
+.plan-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-bottom:4px;}
+.plan-title span{color:var(--accent);}
+.plan-sub{font-size:14px;color:var(--muted);margin-bottom:16px;}
+.plan-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.ptag{background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.25);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:1px;}
+.ptag.green{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.25);color:var(--accent2);}
+.ptag.orange{background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.25);color:var(--accent3);}
+
+/* ACTION BAR */
+.action-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:28px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;}
+.act-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-right:4px;flex-shrink:0;}
+.act-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
+.act-btn:hover{border-color:var(--accent);color:var(--accent);}
+.act-btn.primary{background:var(--accent);border-color:var(--accent);color:#0d1f14;font-weight:700;}
+.act-btn.primary:hover{opacity:0.88;color:#0d1f14;}
+.act-sep{width:1px;height:20px;background:var(--border);}
+
+/* DAY SECTIONS */
+.day-section{margin-bottom:36px;}
+.day-header-bar{display:flex;align-items:center;margin-bottom:16px;}
+.day-number-badge{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:var(--accent);color:#0d1f14;padding:6px 16px;border-radius:4px 0 0 4px;white-space:nowrap;flex-shrink:0;}
+.day-title-block{background:var(--surface2);border:1px solid var(--border);border-left:none;padding:6px 16px;flex:1;border-radius:0 4px 4px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.day-session-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--text);}
+.day-meta{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.day-meta-pill{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.2);color:var(--accent);padding:3px 8px;border-radius:100px;}
+.day-meta-pill.intensity-low{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.2);color:var(--accent2);}
+.day-meta-pill.intensity-medium{background:rgba(245,197,24,0.1);border-color:rgba(245,197,24,0.2);color:var(--accent);}
+.day-meta-pill.intensity-high{background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.2);color:var(--accent3);}
+.day-meta-pill.intensity-max{background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.2);color:var(--danger);}
+
+/* EXERCISE CARDS */
+.ex-card{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:8px;background:var(--surface);transition:border-color 0.2s;}
+.ex-card:hover{border-color:rgba(245,197,24,0.3);}
+.ex-card.open{border-color:rgba(74,222,128,0.4);}
+.ex-card-header{padding:14px 18px;display:grid;grid-template-columns:40px 1fr auto 28px;gap:12px;align-items:center;cursor:pointer;user-select:none;transition:background 0.15s;}
+.ex-card-header:hover{background:rgba(255,255,255,0.02);}
+.ex-num{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--border);line-height:1;}
+.ex-card.open .ex-num{color:var(--accent2);}
+.ex-info{min-width:0;}
+.ex-nameline{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:4px;}
+.ex-title{font-size:14px;font-weight:600;color:var(--text);}
+.ex-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;border:1px solid;white-space:nowrap;}
+.ex-tag.warmup{color:var(--accent3);border-color:rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);}
+.ex-tag.drill{color:var(--accent2);border-color:rgba(74,222,128,0.4);background:rgba(74,222,128,0.06);}
+.ex-tag.team,.ex-tag.game{color:var(--accent);border-color:rgba(245,197,24,0.4);background:rgba(245,197,24,0.08);}
+.ex-tag.cooldown{color:var(--muted);border-color:rgba(107,154,120,0.4);background:rgba(107,154,120,0.06);}
+.ex-loc{font-size:10px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:2px 7px;border-radius:100px;}
+.ex-shots{display:flex;gap:4px;flex-wrap:wrap;}
+.ex-shot-tag{font-size:9px;font-weight:600;padding:1px 6px;border-radius:100px;border:1px solid rgba(74,222,128,0.3);background:rgba(74,222,128,0.06);color:var(--accent2);font-family:'JetBrains Mono',monospace;}
+.ex-brief{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:500px;}
+.ex-sets{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:500;text-align:right;white-space:nowrap;}
+.ex-chevron{font-size:14px;color:var(--muted);transition:transform 0.22s;text-align:center;}
+.ex-card.open .ex-chevron{transform:rotate(180deg);color:var(--accent2);}
+.ex-body{display:none;padding:0 18px 18px 70px;}
+.ex-card.open .ex-body{display:block;}
+.ex-overview{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:16px;font-weight:300;}
+.ex-steps-hdr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.ex-steps{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.ex-steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text);line-height:1.6;}
+.snum{flex-shrink:0;width:21px;height:21px;border-radius:50%;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);color:var(--accent2);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;font-family:'JetBrains Mono',monospace;}
+.ex-cue{background:rgba(245,197,24,0.05);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0;margin-bottom:12px;}
+.ex-cue-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.ex-cue p{font-size:12px;color:rgba(245,197,24,0.85);line-height:1.55;font-style:italic;}
+.ex-team-note{background:rgba(245,197,24,0.04);border-left:3px solid rgba(245,197,24,0.5);padding:10px 14px;border-radius:0 4px 4px 0;margin-bottom:12px;}
+.ex-team-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.ex-team-note p{font-size:12px;color:rgba(245,197,24,0.7);line-height:1.55;}
+
+/* Drill library save button */
+.save-drill-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:all 0.15s;margin-bottom:12px;}
+.save-drill-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+.save-drill-btn.saved{border-color:var(--accent2);color:var(--accent2);background:rgba(74,222,128,0.08);}
+
+/* VIDEO */
+.ex-vid-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.vid-cards{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.vid-card{width:180px;background:var(--bg);border:1px solid var(--border);border-radius:5px;overflow:hidden;cursor:pointer;transition:all 0.18s;text-decoration:none;display:flex;flex-direction:column;}
+.vid-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.vid-thumb{width:100%;height:95px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;}
+.vid-play{width:34px;height:34px;background:rgba(255,0,0,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:white;}
+.vid-info{padding:7px 9px;}
+.vid-title{font-size:10px;color:var(--text);font-weight:500;line-height:1.3;}
+.vid-yt{display:flex;align-items:center;gap:4px;margin-top:4px;}
+.yt-dot{background:#ff0000;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px;}
+.vid-channel{font-size:9px;color:var(--muted);}
+.yt-big-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#ff0000;border:none;border-radius:4px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity 0.2s;white-space:nowrap;align-self:center;}
+.yt-big-btn:hover{opacity:0.85;}
+
+/* COACH NOTES */
+.coach-notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px;}
+.coach-note-card{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:18px;position:relative;overflow:hidden;}
+.coach-note-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent2),transparent);}
+.cn-icon{font-size:24px;margin-bottom:8px;display:block;}
+.cn-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;}
+.cn-text{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300;}
+
+/* SECTION HEADERS */
+.sec-hdr{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.sec-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
+.sec-hdr .court-line{width:30px;height:3px;background:var(--accent);border-radius:2px;}
+
+/* RESET */
+.reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;cursor:pointer;border-radius:4px;transition:all 0.18s;margin-top:40px;display:block;}
+.reset-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ═══ DRILL LIBRARY ═══ */
+.library-page{display:none;padding:0 40px 80px;max-width:1100px;}
+.library-page.show{display:block;}
+.lib-search-bar{display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap;}
+.lib-search-input{flex:1;min-width:200px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color 0.18s;}
+.lib-search-input:focus{border-color:var(--accent2);}
+.lib-search-input::placeholder{color:var(--muted);}
+.lib-filter-btn{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:100px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
+.lib-filter-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+.lib-filter-btn.active{border-color:var(--accent2);background:rgba(74,222,128,0.1);color:var(--accent2);}
+.lib-empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.lib-empty .lib-empty-icon{font-size:48px;display:block;margin-bottom:16px;opacity:0.5;}
+.lib-empty p{font-size:14px;line-height:1.6;}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.lib-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px;cursor:pointer;transition:all 0.18s;position:relative;}
+.lib-card:hover{border-color:rgba(245,197,24,0.4);transform:translateY(-2px);}
+.lib-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:8px;}
+.lib-card-name{font-size:14px;font-weight:700;color:var(--text);flex:1;}
+.lib-card-del{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:2px 4px;border-radius:3px;transition:color 0.15s;line-height:1;flex-shrink:0;}
+.lib-card-del:hover{color:var(--danger);}
+.lib-card-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
+.lib-card-tag{font-size:9px;font-weight:600;padding:1px 6px;border-radius:100px;border:1px solid;font-family:'JetBrains Mono',monospace;}
+.lib-card-overview{font-size:12px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.lib-card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.lib-card-sets{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);}
+.lib-card-date{font-size:10px;color:var(--muted);}
+.lib-count-badge{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:100px;}
+
+/* LIBRARY DETAIL MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(10,20,14,0.88);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.overlay.show{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;width:560px;max-width:calc(100vw - 32px);max-height:85vh;overflow-y:auto;position:relative;animation:modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes modalIn{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:8px 8px 0 0;}
+.modal-inner{padding:32px;}
+.modal-close-btn{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 8px;border-radius:3px;transition:color 0.15s;}
+.modal-close-btn:hover{color:var(--text);}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;letter-spacing:1px;margin-bottom:6px;}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:22px;}
+.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.share-item{padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:5px;cursor:pointer;transition:all 0.18s;display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--text);}
+.share-item:hover{border-color:var(--accent);color:var(--accent);}
+.share-item .si-icon{font-size:20px;}
+.share-item small{display:block;font-size:10px;color:var(--muted);font-weight:400;margin-top:1px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--accent);color:#0d1f14;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;padding:10px 22px;border-radius:100px;opacity:0;transition:all 0.28s;z-index:400;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ═══ PRINT ═══ */
+@media print{
+  @page{margin:15mm 12mm;size:A4;}
+  body{background:#fff!important;color:#111!important;font-family:Georgia,serif;}
+  body::before,body::after,header,.action-bar,.reset-btn,.overlay,.toast,.ex-vid-lbl,.vid-cards,.save-drill-btn,.shots-count-bar{display:none!important;}
+  .results{padding:0!important;display:block!important;max-width:none!important;}
+  .library-page,.loading-wrap{display:none!important;}
+
+  /* Print header */
+  .print-header{display:flex!important;align-items:center;justify-content:space-between;border-bottom:3px solid #1a7a30;padding-bottom:12px;margin-bottom:20px;}
+  .print-logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:2px;color:#1a7a30;}
+  .print-date{font-size:10px;color:#666;text-align:right;}
+
+  .plan-header{background:#f4fdf6!important;border:2px solid #1a7a30!important;border-radius:4px!important;padding:16px 20px!important;}
+  .plan-header::before{display:none!important;}
+  .plan-header::after{background:#1a7a30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .plan-title{color:#0d2e14!important;font-size:28px!important;}
+  .plan-title span{color:#1a7a30!important;}
+  .plan-sub{color:#444!important;}
+  .ptag{background:#e8f5e9!important;border-color:#a5d6a7!important;color:#1a7a30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  .day-section{page-break-inside:avoid;margin-bottom:24px!important;}
+  .day-number-badge{background:#1a7a30!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11px!important;}
+  .day-title-block{background:#f0f0f0!important;border:1px solid #ccc!important;}
+  .day-session-name{color:#111!important;}
+  .day-meta-pill{background:#e8f5e9!important;border-color:#a5d6a7!important;color:#1a7a30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .day-meta-pill.intensity-high,.day-meta-pill.intensity-max{background:#fff3e0!important;border-color:#ffb74d!important;color:#e65100!important;}
+
+  .ex-card{border:1px solid #ddd!important;background:#fff!important;break-inside:avoid;margin-bottom:6px!important;border-radius:3px!important;}
+  .ex-card.open .ex-body,.ex-body{display:block!important;}
+  .ex-num{color:#aaa!important;}
+  .ex-title{color:#111!important;font-size:13px!important;}
+  .ex-tag.warmup{color:#e65100!important;border-color:#ffb74d!important;background:#fff3e0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .ex-tag.drill{color:#1a7a30!important;border-color:#a5d6a7!important;background:#e8f5e9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .ex-tag.team,.ex-tag.game{color:#b8a000!important;border-color:#f5c518!important;background:#fffde7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .ex-loc{background:#f5f5f5!important;color:#666!important;}
+  .ex-brief{display:none!important;}
+  .ex-card-header{padding:10px 14px!important;}
+  .ex-body{padding:0 14px 12px 52px!important;}
+  .ex-overview{color:#333!important;font-size:12px!important;}
+  .ex-steps-hdr{color:#1a7a30!important;}
+  .ex-steps li{color:#222!important;font-size:12px!important;}
+  .snum{background:#e8f5e9!important;border:1px solid #a5d6a7!important;color:#1a7a30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .ex-cue{border-left:3px solid #1a7a30!important;background:#f0fdf4!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .ex-cue p{color:#1a5a25!important;}
+  .ex-cue-lbl{color:#1a7a30!important;}
+  .ex-team-note{border-left:3px solid #b8a000!important;background:#fffde7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .ex-team-note p{color:#7a5c00!important;}
+  .ex-team-lbl{color:#b8a000!important;}
+  .ex-sets{color:#1a7a30!important;}
+  .ex-chevron{display:none!important;}
+  .ex-shot-tag{background:#e8f5e9!important;border-color:#a5d6a7!important;color:#1a7a30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  .sec-hdr{color:#0d2e14!important;border-bottom:1px solid #ccc;padding-bottom:6px;}
+  .coach-note-card{background:#f8f8f8!important;border:1px solid #ddd!important;}
+  .coach-note-card::before{background:#1a7a30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cn-title{color:#111!important;}
+  .cn-text{color:#444!important;}
+
+  .print-footer{display:flex!important;justify-content:space-between;align-items:center;border-top:1px solid #ccc;padding-top:10px;margin-top:20px;font-size:10px;color:#888;}
+}
+
+/* PRINT ELEMENTS (hidden on screen) */
+.print-header,.print-footer{display:none;}
+
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:768px){
+  header{padding:0 16px;}
+  .hero,.configurator,.results,.library-page{padding-left:16px;padding-right:16px;}
+  .configurator{grid-template-columns:1fr;}
+  .config-card.full-width{grid-column:1;}
+  .shot-grid{grid-template-columns:repeat(3,1fr);}
+  .days-grid{grid-template-columns:repeat(4,1fr);}
+  .ex-card-header{grid-template-columns:36px 1fr auto;padding:12px 14px;}
+  .ex-card-header .ex-chevron{display:none;}
+  .ex-body{padding-left:50px;}
+  .coach-notes-grid{grid-template-columns:1fr;}
+  .share-grid{grid-template-columns:1fr;}
+  .lib-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <div class="logo-shuttle">🏸</div>
+    <div class="logo-text"><span>Shuttle</span><em>Academy</em></div>
+  </div>
+  <div class="header-nav">
+    <button class="nav-btn active" id="navPlan" onclick="showPage('plan')">Training Plan</button>
+    <button class="nav-btn" id="navLib" onclick="showPage('library')">Drill Library</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-deco">🏸</div>
+  <div class="hero-eyebrow">Court-Based Training System</div>
+  <h1>
+    <span class="line1">BUILD YOUR</span>
+    <span class="line2">BADMINTON</span>
+    <span class="line3">GAME.</span>
+  </h1>
+  <p class="hero-sub">Configure your team's profile and get fully detailed court training plans — step-by-step drills, team games, and video references for every session day.</p>
+  <div class="hero-stripe"></div>
+</section>
+
+<!-- CONFIGURATOR -->
+<div class="configurator" id="configurator">
+
+  <div class="config-card">
+    <div class="card-label">01 — Player Level</div>
+    <div class="card-title">What level are your players?</div>
+    <div class="level-options">
+      <button class="level-btn" onclick="setLevel(this)" data-level="begynder"><span class="lv-icon">🌱</span>Begynder</button>
+      <button class="level-btn" onclick="setLevel(this)" data-level="intermediate"><span class="lv-icon">⚡</span>Intermediate</button>
+      <button class="level-btn" onclick="setLevel(this)" data-level="avanceret"><span class="lv-icon">🔥</span>Avanceret</button>
+      <button class="level-btn" onclick="setLevel(this)" data-level="ekspert"><span class="lv-icon">🏆</span>Ekspert</button>
+    </div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-label">02 — Age Group</div>
+    <div class="card-title">How old are your players?</div>
+    <div class="age-grid">
+      <button class="age-btn" onclick="setAge(this)" data-age="5-8" data-label="Mini Juniors" data-desc="<strong>5–8 yrs:</strong> Maximum fun, minimum frustration. Short activities, imaginative names, cooperative play only.">
+        <span class="ag-icon">🐣</span><span style="font-size:11px;font-weight:700">Mini</span><span class="ag-range">5–8 yrs</span>
+      </button>
+      <button class="age-btn" onclick="setAge(this)" data-age="9-12" data-label="Juniors" data-desc="<strong>9–12 yrs:</strong> Fun games with simple technique. Team games in focus. Light competition.">
+        <span class="ag-icon">🧒</span><span style="font-size:11px;font-weight:700">Juniors</span><span class="ag-range">9–12 yrs</span>
+      </button>
+      <button class="age-btn" onclick="setAge(this)" data-age="13-15" data-label="U15" data-desc="<strong>13–15 yrs:</strong> Real technical instruction. Multi-step patterns and tactical team games.">
+        <span class="ag-icon">🧑</span><span style="font-size:11px;font-weight:700">U15</span><span class="ag-range">13–15 yrs</span>
+      </button>
+      <button class="age-btn" onclick="setAge(this)" data-age="16-18" data-label="U19" data-desc="<strong>16–18 yrs:</strong> Technical precision, competitive intensity, match simulation.">
+        <span class="ag-icon">🧑‍🦱</span><span style="font-size:11px;font-weight:700">U19</span><span class="ag-range">16–18 yrs</span>
+      </button>
+      <button class="age-btn" onclick="setAge(this)" data-age="19-30" data-label="Adults" data-desc="<strong>19–30 yrs:</strong> Full intensity, complex patterns, competitive tactical training.">
+        <span class="ag-icon">🏃</span><span style="font-size:11px;font-weight:700">Adults</span><span class="ag-range">19–30 yrs</span>
+      </button>
+      <button class="age-btn" onclick="setAge(this)" data-age="30+" data-label="Masters" data-desc="<strong>30+ yrs:</strong> Technique over intensity. Longer warm-up, efficient movement, social team games.">
+        <span class="ag-icon">🧓</span><span style="font-size:11px;font-weight:700">Masters</span><span class="ag-range">30+ yrs</span>
+      </button>
+    </div>
+    <div class="age-desc-box" id="ageDescBox"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-label">03 — Session Setup</div>
+    <div class="card-title">Duration per session</div>
+    <div class="opt-row" id="durBtns">
+      <button class="opt-btn" onclick="setOpt(this,'dur')" data-dur="45">45 min</button>
+      <button class="opt-btn" onclick="setOpt(this,'dur')" data-dur="60">60 min</button>
+      <button class="opt-btn" onclick="setOpt(this,'dur')" data-dur="90">90 min</button>
+      <button class="opt-btn" onclick="setOpt(this,'dur')" data-dur="120">2 hrs</button>
+    </div>
+    <div style="margin-top:18px">
+      <div class="card-title" style="font-size:14px;margin-bottom:12px">Sessions per week</div>
+      <div class="opt-row" id="freqBtns">
+        <button class="opt-btn" onclick="setOpt(this,'freq')" data-freq="2">2×</button>
+        <button class="opt-btn" onclick="setOpt(this,'freq')" data-freq="3">3×</button>
+        <button class="opt-btn" onclick="setOpt(this,'freq')" data-freq="4">4×</button>
+        <button class="opt-btn" onclick="setOpt(this,'freq')" data-freq="5">5×</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-label">04 — Training Days to Plan</div>
+    <div class="card-title">How many days do you need planned?</div>
+    <div class="days-grid" id="daysBtns">
+      <button class="day-count-btn" onclick="setDays(this)" data-days="1">1<span class="dc-sub">day</span></button>
+      <button class="day-count-btn" onclick="setDays(this)" data-days="2">2<span class="dc-sub">days</span></button>
+      <button class="day-count-btn" onclick="setDays(this)" data-days="3">3<span class="dc-sub">days</span></button>
+      <button class="day-count-btn" onclick="setDays(this)" data-days="4">4<span class="dc-sub">days</span></button>
+      <button class="day-count-btn" onclick="setDays(this)" data-days="5">5<span class="dc-sub">days</span></button>
+      <button class="day-count-btn" onclick="setDays(this)" data-days="6">6<span class="dc-sub">days</span></button>
+      <button class="day-count-btn" onclick="setDays(this)" data-days="7">7<span class="dc-sub">days</span></button>
+    </div>
+  </div>
+
+  <div class="config-card full-width">
+    <div class="card-label">05 — Shots &amp; Movements</div>
+    <div class="card-title">Which shots and movements should the plan focus on? <span style="font-size:12px;font-weight:400;color:var(--muted)">(select all that apply)</span></div>
+    <div class="shot-section">
+      <div class="shot-section-hdr">⚔️ Attacking Shots</div>
+      <div class="shot-grid">
+        <button class="shot-btn shot-attack" onclick="toggleShot(this)" data-shot="smash"><span class="shot-icon">💥</span><span class="shot-name">Smash</span><span class="shot-sub">Power & angle</span></button>
+        <button class="shot-btn shot-attack" onclick="toggleShot(this)" data-shot="jump-smash"><span class="shot-icon">🦅</span><span class="shot-name">Jump Smash</span><span class="shot-sub">Aerial attack</span></button>
+        <button class="shot-btn shot-attack" onclick="toggleShot(this)" data-shot="netkill"><span class="shot-icon">🎯</span><span class="shot-name">Net-kill</span><span class="shot-sub">Finish at net</span></button>
+        <button class="shot-btn shot-attack" onclick="toggleShot(this)" data-shot="drive"><span class="shot-icon">➡️</span><span class="shot-name">Drive</span><span class="shot-sub">Flat & fast</span></button>
+        <button class="shot-btn shot-attack" onclick="toggleShot(this)" data-shot="push"><span class="shot-icon">👆</span><span class="shot-name">Push</span><span class="shot-sub">Mid-court</span></button>
+      </div>
+    </div>
+    <div class="shot-section">
+      <div class="shot-section-hdr">🎭 Control &amp; Deception</div>
+      <div class="shot-grid">
+        <button class="shot-btn shot-control" onclick="toggleShot(this)" data-shot="drop-shot"><span class="shot-icon">🔽</span><span class="shot-name">Drop Shot</span><span class="shot-sub">Slow &amp; tight</span></button>
+        <button class="shot-btn shot-control" onclick="toggleShot(this)" data-shot="net-shot"><span class="shot-icon">🕸️</span><span class="shot-name">Net Shot</span><span class="shot-sub">Tumle & spin</span></button>
+        <button class="shot-btn shot-control" onclick="toggleShot(this)" data-shot="slice"><span class="shot-icon">✂️</span><span class="shot-name">Slice</span><span class="shot-sub">Cut &amp; angle</span></button>
+        <button class="shot-btn shot-control" onclick="toggleShot(this)" data-shot="deception"><span class="shot-icon">🎩</span><span class="shot-name">Deception</span><span class="shot-sub">Feints &amp; fakes</span></button>
+        <button class="shot-btn shot-control" onclick="toggleShot(this)" data-shot="serve"><span class="shot-icon">🏸</span><span class="shot-name">Serve</span><span class="shot-sub">Low & high</span></button>
+      </div>
+    </div>
+    <div class="shot-section">
+      <div class="shot-section-hdr">🛡️ Defensive &amp; Clearing</div>
+      <div class="shot-grid">
+        <button class="shot-btn shot-defense" onclick="toggleShot(this)" data-shot="clear"><span class="shot-icon">🌈</span><span class="shot-name">Clear</span><span class="shot-sub">Deep & high</span></button>
+        <button class="shot-btn shot-defense" onclick="toggleShot(this)" data-shot="defensive-clear"><span class="shot-icon">🏃</span><span class="shot-name">Def. Clear</span><span class="shot-sub">Reset rally</span></button>
+        <button class="shot-btn shot-defense" onclick="toggleShot(this)" data-shot="lift"><span class="shot-icon">⬆️</span><span class="shot-name">Lift</span><span class="shot-sub">Net to back</span></button>
+        <button class="shot-btn shot-defense" onclick="toggleShot(this)" data-shot="block"><span class="shot-icon">🧱</span><span class="shot-name">Block</span><span class="shot-sub">Smash defence</span></button>
+        <button class="shot-btn shot-defense" onclick="toggleShot(this)" data-shot="defensive-drive"><span class="shot-icon">🔄</span><span class="shot-name">Counter Drive</span><span class="shot-sub">Flat defence</span></button>
+      </div>
+    </div>
+    <div class="shot-section" style="margin-bottom:0">
+      <div class="shot-section-hdr">👟 Movement &amp; Physical</div>
+      <div class="shot-grid">
+        <button class="shot-btn shot-movement" onclick="toggleShot(this)" data-shot="footwork"><span class="shot-icon">🦶</span><span class="shot-name">Footwork</span><span class="shot-sub">Six corners</span></button>
+        <button class="shot-btn shot-movement" onclick="toggleShot(this)" data-shot="shadow-footwork"><span class="shot-icon">👻</span><span class="shot-name">Shadow Drill</span><span class="shot-sub">Ghosting</span></button>
+        <button class="shot-btn shot-movement" onclick="toggleShot(this)" data-shot="split-step"><span class="shot-icon">⚡</span><span class="shot-name">Split-step</span><span class="shot-sub">Reaction</span></button>
+        <button class="shot-btn shot-movement" onclick="toggleShot(this)" data-shot="endurance"><span class="shot-icon">❤️</span><span class="shot-name">Endurance</span><span class="shot-sub">Court fitness</span></button>
+        <button class="shot-btn shot-movement" onclick="toggleShot(this)" data-shot="tactical"><span class="shot-icon">🧠</span><span class="shot-name">Tactics</span><span class="shot-sub">Pattern play</span></button>
+      </div>
+    </div>
+    <div class="shots-count-bar" id="shotsBar">✓ <span id="shotsCountTxt"></span> valgt</div>
+  </div>
+
+  <div class="generate-wrap">
+    <button class="generate-btn" onclick="generatePlan()">🏸 GENERATE TRAINING PLAN</button>
+  </div>
+</div>
+
+<div class="error-msg" id="errMsg"></div>
+
+<!-- LOADING -->
+<div class="loading-wrap" id="loadWrap">
+  <span class="shuttle-spin">🏸</span>
+  <div class="load-txt" id="loadTxt">Generating your plan...</div>
+  <div class="load-progress"><div class="load-bar"></div></div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="overlay" id="shareOverlay">
+  <div class="modal-box">
+    <div class="modal-inner">
+      <button class="modal-close-btn" onclick="closeShare()">✕</button>
+      <div class="modal-title">Del Training Plan</div>
+      <div class="modal-sub">Send the full plan to players, parents, or coaching staff.</div>
+      <div class="share-grid">
+        <button class="share-item" onclick="shareEmail()"><span class="si-icon">✉️</span><div><div>Email</div><small>Open mail client</small></div></button>
+        <button class="share-item" onclick="shareSMS()"><span class="si-icon">💬</span><div><div>SMS / Message</div><small>Open messages</small></div></button>
+        <button class="share-item" onclick="copyText()"><span class="si-icon">📋</span><div><div>Copy Text</div><small>Paste anywhere</small></div></button>
+        <button class="share-item" onclick="printPlan()"><span class="si-icon">📄</span><div><div>Print / PDF</div><small>Print dialog</small></div></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DRILL DETAIL MODAL -->
+<div class="overlay" id="drillModal">
+  <div class="modal-box" style="width:640px">
+    <div class="modal-inner" id="drillModalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- RESULTS -->
+<div class="results" id="results">
+  <!-- Print-only header -->
+  <div class="print-header">
+    <div class="print-logo">🏸 SHUTTLE ACADEMY</div>
+    <div class="print-date" id="printDate"></div>
+  </div>
+
+  <div class="plan-header">
+    <div class="plan-title">YOUR <span id="rTitle">TRAINING PLAN</span></div>
+    <div class="plan-sub" id="rSub"></div>
+    <div class="plan-tags" id="rTags"></div>
+  </div>
+
+  <div class="action-bar">
+    <span class="act-label">Del & Eksport</span>
+    <button class="act-btn primary" onclick="openShare()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    >Share Plan<
+    </button>
+    <button class="act-btn" onclick="printPlan()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    >Print / Save PDF<
+    </button>
+    <div class="act-sep"></div>
+    <button class="act-btn" onclick="copyText()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    >Copy Text<
+    </button>
+    <button class="act-btn" onclick="shareEmail()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    >Email Team<
+    </button>
+  </div>
+
+  <div id="allDays"></div>
+
+  <div style="margin-bottom:40px">
+    <div class="sec-hdr"><div class="court-line"></div> Coach's Notes</div>
+    <div class="coach-notes-grid" id="coachNotes"></div>
+  </div>
+
+  <!-- Print footer -->
+  <div class="print-footer">
+    <span>Shuttle Academy — Badminton Training Planer</span>
+    <span id="printFooterMeta"></span>
+  </div>
+
+  <button class="reset-btn" onclick="resetForm()">← New Plan</button>
+</div>
+
+<!-- DRILL LIBRARY -->
+<div class="library-page" id="libraryPage">
+  <div style="padding-top:40px;margin-bottom:24px">
+    <div class="sec-hdr"><div class="court-line"></div> Drill Library</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">All saved exercises from your generated plans. Click any exercise to view details.</p>
+  </div>
+
+  <div class="lib-search-bar">
+    <input class="lib-search-input" id="libSearch" placeholder="Search exercises..." oninput="renderLibrary()" />
+    <button class="lib-filter-btn active" onclick="setLibFilter(this,'all')" data-filter="all">All</button>
+    <button class="lib-filter-btn" onclick="setLibFilter(this,'warmup')" data-filter="warmup">Warm-up</button>
+    <button class="lib-filter-btn" onclick="setLibFilter(this,'drill')" data-filter="drill">Drill</button>
+    <button class="lib-filter-btn" onclick="setLibFilter(this,'team')" data-filter="team">Team</button>
+    <button class="lib-filter-btn" onclick="setLibFilter(this,'game')" data-filter="game">Game</button>
+    <button class="lib-filter-btn" onclick="setLibFilter(this,'cooldown')" data-filter="cooldown">Cool-down</button>
+    <span class="lib-count-badge" id="libCountBadge">0 exercises</span>
+  </div>
+
+  <div id="libGrid"></div>
+</div>
+
+</div><!-- .page -->
+<script>
+// ═══ STATE ═══
+const st={level:null,age:null,ageLabel:null,dur:null,freq:null,days:null,shots:[]};
+let plan=null;
+let drillLib=JSON.parse(localStorage.getItem('shuttleLib')||'[]');
+let libFilter='all';
+
+const AGE_PHIL={
+  '5-8':'Mini Juniors (5-8): Max fun, zero frustration. Imaginative game names, animal movements, cooperative play. Max 5-8 min per activity. No competitive scoring. Focus on basic movement.',
+  '9-12':'Juniors (9-12): Fun games with simple technique. Team games with points. Mix cooperation and light competition.',
+  '13-15':'U15 (13-15): Real technical instruction. Multi-step patterns. Tactical team games. Friendly competition.',
+  '16-18':'U19 (16-18): Technical precision. Competitive intensity. Match simulation. Complex multi-shuttle drills.',
+  '19-30':'Adults (19-30): High-intensity technical and tactical training. Complex patterns. Competitive games.',
+  '30+':'Masters (30+): Technique over intensity. Longer warm-up/cool-down. Efficient footwork. Inclusive social team games.'
+};
+const TYPE_LABELS={warmup:'Warm-up',drill:'Court Drill',team:'Team Exercise',game:'Team Game',cooldown:'Cool-down'};
+const INTENSITY_CLASS={Low:'intensity-low',Medium:'intensity-medium',High:'intensity-high',Max:'intensity-max'};
+const LOAD_MSGS=['Reading player profile...','Designing court drills...','Building team games...','Scheduling training days...','Finalising your plan...'];
+let loadInt=null;
+
+// ═══ PAGE NAVIGATION ═══
+function showPage(p){
+  document.getElementById('navPlan').classList.toggle('active',p==='plan');
+  document.getElementById('navLib').classList.toggle('active',p==='library');
+  document.getElementById('libraryPage').classList.toggle('show',p==='library');
+  if(p==='library'){
+    document.getElementById('heroSection').style.display='none';
+    document.getElementById('configurator').style.display='none';
+    document.getElementById('results').classList.remove('show');
+    document.getElementById('loadWrap').classList.remove('show');
+    renderLibrary();
+  } else {
+    if(plan){
+      document.getElementById('heroSection').style.display='none';
+      document.getElementById('configurator').style.display='none';
+      document.getElementById('results').classList.add('show');
+    } else {
+      document.getElementById('heroSection').style.display='block';
+      document.getElementById('configurator').style.display='grid';
+    }
+  }
+}
+
+// ═══ UI HANDLERS ═══
+function setLevel(b){document.querySelectorAll('.level-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');st.level=b.dataset.level;}
+function setAge(b){document.querySelectorAll('.age-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');st.age=b.dataset.age;st.ageLabel=b.dataset.label;const d=document.getElementById('ageDescBox');d.innerHTML=b.dataset.desc;d.classList.add('show');}
+function setOpt(b,t){document.querySelectorAll(`#${t==='dur'?'durBtns':'freqBtns'} .opt-btn`).forEach(x=>x.classList.remove('active'));b.classList.add('active');if(t==='dur')st.dur=b.dataset.dur;else st.freq=b.dataset.freq;}
+function setDays(b){document.querySelectorAll('.day-count-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');st.days=parseInt(b.dataset.days);}
+function toggleShot(b){const s=b.dataset.shot;if(b.classList.contains('active')){b.classList.remove('active');st.shots=st.shots.filter(x=>x!==s);}else{b.classList.add('active');st.shots.push(s);}const n=st.shots.length;const bar=document.getElementById('shotsBar');if(n>0){bar.classList.add('show');document.getElementById('shotsCountTxt').textContent=`${n} shot${n>1?'s':''}`;}else bar.classList.remove('show');}
+function showErr(m){const e=document.getElementById('errMsg');e.textContent=m;e.classList.add('show');}
+function clearErr(){document.getElementById('errMsg').classList.remove('show');}
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function resetForm(){plan=null;document.getElementById('results').classList.remove('show');document.getElementById('configurator').style.display='grid';document.getElementById('heroSection').style.display='block';clearErr();window.scrollTo({top:0,behavior:'smooth'});}
+
+// ═══ SHARE ═══
+function openShare(){document.getElementById('shareOverlay').classList.add('show');}
+function closeShare(){document.getElementById('shareOverlay').classList.remove('show');}
+document.getElementById('shareOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('shareOverlay'))closeShare();});
+
+function printPlan(){
+  closeShare();
+  document.getElementById('printDate').textContent='Printed: '+new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('printFooterMeta').textContent=`Level: ${st.level} | Age: ${st.age} | ${st.dur} min | ${st.freq}×/wk`;
+  // Expand all cards for print
+  document.querySelectorAll('.ex-card').forEach(c=>c.classList.add('open'));
+  window.print();
+}
+
+function buildText(){
+  if(!plan)return'';
+  let t=`🏸 SHUTTLE ACADEMY — ${plan.planTitle.toUpperCase()}\n${plan.subtitle}\nLevel: ${st.level} | Age: ${st.age} (${st.ageLabel}) | ${st.dur} min | ${st.freq}×/wk | ${st.days} days\nShots: ${st.shots.join(', ')}\n\n`;
+  plan.days.forEach((d,di)=>{
+    t+=`${'━'.repeat(50)}\nDAY ${di+1} — ${d.dayName}: ${d.sessionName}\n${d.sessionSubtitle} | ${d.intensity}\n\n`;
+    d.exercises.forEach((ex,i)=>{
+      t+=`${i+1}. ${ex.name} [${ex.location||''}] — ${ex.sets}\n   ${ex.overview}\n   Steps:\n`;
+      (ex.steps||[]).forEach((s,si)=>{t+=`   ${si+1}. ${s}\n`;});
+      t+=`   💡 ${ex.coachingCue}\n`;
+      if(ex.teamNote)t+=`   👥 ${ex.teamNote}\n`;
+      t+=`   📺 YouTube: "${ex.videoSearchQuery}"\n\n`;
+    });
+  });
+  t+=`${'━'.repeat(50)}\nCOACH'S NOTES\n`;
+  plan.coachNotes.forEach(n=>{t+=`${n.icon} ${n.title}: ${n.text}\n`;});
+  return t;
+}
+function copyText(){closeShare();const txt=buildText();if(!txt)return;navigator.clipboard.writeText(txt).then(()=>toast('✓ Copied to clipboard')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied to clipboard');});}
+function shareEmail(){closeShare();if(!plan)return;window.open(`mailto:?subject=${encodeURIComponent('🏸 Badminton Training Plan — '+plan.planTitle)}&body=${encodeURIComponent(buildText())}`);}
+function shareSMS(){closeShare();window.open(`sms:?body=${encodeURIComponent(buildText().substring(0,1400))}`);}
+
+// ═══ GENERATE ═══
+async function generatePlan(){
+  if(!st.level)return showErr('Please select a player level.');
+  if(!st.age)return showErr('Please select an age group.');
+  if(!st.dur)return showErr('Please choose a session duration.');
+  if(!st.freq)return showErr('Please choose sessions per week.');
+  if(!st.days)return showErr('Please choose how many days to plan.');
+  if(st.shots.length===0)return showErr('Please select at least one shot or movement.');
+  clearErr();
+  document.getElementById('configurator').style.display='none';
+  document.getElementById('heroSection').style.display='none';
+  document.getElementById('results').classList.remove('show');
+  const lw=document.getElementById('loadWrap');lw.classList.add('show');
+  const ltxt=document.getElementById('loadTxt');
+  let mi=0;ltxt.textContent=LOAD_MSGS[0];
+  loadInt=setInterval(()=>{mi=(mi+1)%LOAD_MSGS.length;ltxt.textContent=LOAD_MSGS[mi];},1600);
+
+  async function callAPI(prompt, maxTok=2000, retries=4){
+    for(let attempt=0; attempt<retries; attempt++){
+      const res=await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({model:"claude-sonnet-4-5",max_tokens:maxTok,messages:[{role:"user",content:prompt}]})
+      });
+      if(res.ok){
+        const data=await res.json();
+        const raw=data.content.map(b=>b.text||'').join('');
+        return raw.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();
+      }
+      // Read error body for better debugging
+      let errBody='';
+      try{ const ed=await res.json(); errBody=ed.error?.message||JSON.stringify(ed); }catch(x){}
+      if(res.status===429){
+        if(attempt===retries-1) throw new Error(`429: Rate limit exceeded. ${errBody}`);
+        const wait=(attempt+1)*5000; // 5s, 10s, 15s
+        ltxt.textContent=`Rate limited — waiting ${wait/1000}s before retry ${attempt+2}/${retries}...`;
+        await new Promise(r=>setTimeout(r,wait));
+      } else if(res.status===529){
+        if(attempt===retries-1) throw new Error(`529: API overloaded. ${errBody}`);
+        const wait=(attempt+1)*5000;
+        ltxt.textContent=`API busy — waiting ${wait/1000}s before retry ${attempt+2}/${retries}...`;
+        await new Promise(r=>setTimeout(r,wait));
+      } else {
+        throw new Error(`API ${res.status}: ${errBody}`);
+      }
+    }
+    throw new Error('API failed after all retries');
+  }
+
+  // Delay between sequential day calls
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+  const dayFocuses=['Foundation & Warm-up','Technical Drilling','Attack & Power','Defence & Recovery','Net & Mid-court','Match Simulation','Competition & Games'].slice(0,st.days);
+
+  try {
+    ltxt.textContent='Creating plan overview...';
+    const hdr=JSON.parse(await callAPI(`You are an elite badminton coach. Return ONLY valid JSON:
+{"planTitle":"creative badminton plan name for ${st.level} level, age ${st.age}","subtitle":"one motivating sentence","coachNotes":[{"icon":"emoji","title":"string","text":"2-3 sentences of coaching advice for age ${st.age}, shots: ${st.shots.join(', ')}"},{"icon":"emoji","title":"string","text":"2-3 sentences"},{"icon":"emoji","title":"string","text":"2-3 sentences"}]}
+Level:${st.level}, Age:${st.age}(${st.ageLabel}), Shots:${st.shots.join(', ')}. ${AGE_PHIL[st.age]||''}`,600));
+
+    // Generate days SEQUENTIALLY to avoid 429 rate limit
+    const days=[];
+    for(let di=0; di<dayFocuses.length; di++){
+      const focus=dayFocuses[di];
+      ltxt.textContent=`Generating day ${di+1} of ${dayFocuses.length}...`;
+      if(di>0) await sleep(1500);
+      const intensity = di===0?'Low':di===(dayFocuses.length-1)?'High':'Medium';
+      const isYoung = parseInt(st.age)<13;
+      const dayJson=await callAPI(`You are an elite badminton coach. Generate ONE badminton training day session. Return ONLY a raw JSON object, no markdown, no explanation.
+
+Required JSON structure:
+{
+  "dayName": "Day ${di+1}",
+  "sessionName": "short creative name",
+  "sessionSubtitle": "one short subtitle",
+  "intensity": "${intensity}",
+  "focus": "${focus}",
+  "exercises": [
+    {
+      "name": "exercise name",
+      "type": "${isYoung?'warmup or team or game':'warmup or drill or team or game or cooldown'}",
+      "targetShots": ["shot name from: ${st.shots.join(', ')}"],
+      "location": "Full court",
+      "sets": "3x10",
+      "overview": "One sentence describing the drill.",
+      "steps": ["Step 1: position and action.", "Step 2.", "Step 3.", "Step 4.", "Step 5."],
+      "coachingCue": "One coaching tip.",
+      "teamNote": null,
+      "videoSearchQuery": "badminton ${st.shots[0]||'drill'} tutorial"
+    }
+  ]
+}
+
+Player: ${st.level} level, age ${st.age}, focus: ${focus}, session: ${st.dur}min.
+${AGE_PHIL[st.age]||''}
+Generate exactly 6 exercises. ${isYoung?'At least 3 must be team or game type.':'At least 2 must be team or game type.'} Each exercise needs exactly 5 steps. Keep steps concise (1 sentence each). teamNote is required for team/game exercises, null for others.`,4000);
+      days.push(JSON.parse(dayJson));
+    }
+
+    clearInterval(loadInt);lw.classList.remove('show');
+    plan={planTitle:hdr.planTitle,subtitle:hdr.subtitle,days,coachNotes:hdr.coachNotes};
+    renderPlan();
+  } catch(e){
+    clearInterval(loadInt);lw.classList.remove('show');
+    document.getElementById('configurator').style.display='grid';
+    document.getElementById('heroSection').style.display='block';
+    const msg=e.message||'';
+    if(msg.includes('429')||msg.includes('rate limit')||msg.toLowerCase().includes('rate')){
+      showErr('Rate limit reached. Please wait 30–60 seconds and try again.');
+    } else if(msg.includes('529')||msg.toLowerCase().includes('overload')){
+      showErr('The AI is temporarily overloaded. Please try again in a moment.');
+    } else if(msg.includes('JSON')||msg.includes('parse')||msg.includes('Parse')){
+      showErr('The AI returned an unexpected response. Please try again.');
+    } else {
+      showErr('Something went wrong (' + msg.substring(0,80) + '). Please try again.');
+    }
+    console.error('Generate error:', e);
+  }
+}
+
+// ═══ RENDER ═══
+function renderPlan(){
+  document.getElementById('rTitle').textContent=plan.planTitle.toUpperCase();
+  document.getElementById('rSub').textContent=plan.subtitle;
+  document.getElementById('rTags').innerHTML=[st.level,`Age ${st.age}`,`${st.dur} min`,`${st.freq}×/wk`,`${st.days} days`,...st.shots.slice(0,4)].map((t,i)=>`<div class="ptag${i===0?' orange':i>=3?' green':''}">${escH(t)}</div>`).join('');
+  document.getElementById('allDays').innerHTML=plan.days.map((d,di)=>renderDay(d,di)).join('');
+  document.getElementById('coachNotes').innerHTML=plan.coachNotes.map((n,i)=>`<div class="coach-note-card" style="animation:fadeUp 0.5s ${i*0.1}s both"><span class="cn-icon">${escH(n.icon)}</span><div class="cn-title">${escH(n.title)}</div><div class="cn-text">${escH(n.text)}</div></div>`).join('');
+  document.getElementById('results').classList.add('show');
+  const first=document.querySelector('.ex-card');
+  if(first){first.classList.add('open');loadVids(first);}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderDay(d,di){
+  const iCls=INTENSITY_CLASS[d.intensity]||'intensity-medium';
+  return `<div class="day-section">
+    <div class="day-header-bar">
+      <div class="day-number-badge">DAY ${di+1} — ${escH(d.dayName||'')}</div>
+      <div class="day-title-block">
+        <div class="day-session-name">${escH(d.sessionName)}</div>
+        <div class="day-meta">
+          <span class="day-meta-pill">${escH(d.focus||'')}</span>
+          <span class="day-meta-pill ${iCls}">${escH(d.intensity)}</span>
+          <span class="day-meta-pill">${escH(st.dur)} min</span>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px;font-style:italic">${escH(d.sessionSubtitle||'')}</div>
+    ${d.exercises.map((ex,i)=>renderEx(ex,i,di)).join('')}
+  </div>`;
+}
+
+function renderEx(ex,i,di){
+  const tc=ex.type||'drill';
+  const isGrp=tc==='team'||tc==='game';
+  const stepsHTML=(ex.steps||[]).map((s,si)=>`<li><span class="snum">${si+1}</span><span>${escH(s)}</span></li>`).join('');
+  const teamHTML=ex.teamNote?`<div class="ex-team-note"><div class="ex-team-lbl">👥 Team Dynamics</div><p>${escH(ex.teamNote)}</p></div>`:'';
+  const shotsHTML=(ex.targetShots||[]).map(s=>`<span class="ex-shot-tag">${escH(s)}</span>`).join('');
+  const vq=escH(ex.videoSearchQuery||ex.name);
+  const saved=drillLib.some(d=>d.name===ex.name&&d.overview===ex.overview);
+  return `<div class="ex-card" data-vq="${vq}" onclick="toggleEx(this)" style="animation:slideIn 0.35s ${(di*8+i)*0.04}s both">
+    <div class="ex-card-header">
+      <div class="ex-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="ex-info">
+        <div class="ex-nameline">
+          <span class="ex-title">${escH(ex.name)}</span>
+          <span class="ex-tag ${tc}">${isGrp?'👥 ':''}${escH(TYPE_LABELS[tc]||tc)}</span>
+          ${ex.location?`<span class="ex-loc">📍 ${escH(ex.location)}</span>`:''}
+        </div>
+        ${shotsHTML?`<div class="ex-shots" style="margin-bottom:3px">${shotsHTML}</div>`:''}
+        <div class="ex-brief">${escH((ex.overview||'').substring(0,100))}${(ex.overview||'').length>100?'…':''}</div>
+      </div>
+      <div class="ex-sets">${escH(ex.sets)}</div>
+      <div class="ex-chevron">▾</div>
+    </div>
+    <div class="ex-body">
+      <button class="save-drill-btn ${saved?'saved':''}" onclick="event.stopPropagation();saveDrill(this,${JSON.stringify(JSON.stringify(ex)).slice(1,-1)})">${saved?'✓ Saved to library':'＋ Save to library'}</button>
+      <p class="ex-overview">${escH(ex.overview||'')}</p>
+      <div class="ex-steps-hdr">Step-by-step instructions</div>
+      <ul class="ex-steps">${stepsHTML}</ul>
+      <div class="ex-cue"><div class="ex-cue-lbl">🎯 Coach's Cue</div><p>${escH(ex.coachingCue||'')}</p></div>
+      ${teamHTML}
+      <div class="ex-vid-lbl">📺 Video demonstrations</div>
+      <div class="vid-cards"></div>
+    </div>
+  </div>`;
+}
+
+function toggleEx(card){const was=card.classList.contains('open');card.classList.toggle('open');if(!was)loadVids(card);}
+
+function loadVids(card){
+  const vc=card.querySelector('.vid-cards');
+  if(!vc||vc.dataset.loaded)return;
+  vc.dataset.loaded='1';
+  const q=card.dataset.vq||'badminton drill';
+  const searches=[{lbl:'Tutorial',q:q+' badminton tutorial'},{lbl:'Training',q:q+' badminton training'},{lbl:'Coach',q:q+' badminton coaching'}];
+  vc.innerHTML=searches.map(s=>`<a class="vid-card" href="https://www.youtube.com/results?search_query=${encodeURIComponent(s.q)}" target="_blank" rel="noopener"><div class="vid-thumb"><div class="vid-play">▶</div><div style="font-size:9px;color:var(--muted)">${escH(s.lbl)}</div></div><div class="vid-info"><div class="vid-title">${escH(q)}</div><div class="vid-yt"><span class="yt-dot">YT</span><span class="vid-channel">${escH(s.lbl)}</span></div></div></a>`).join('')+`<a class="yt-big-btn" href="https://www.youtube.com/results?search_query=${encodeURIComponent(q+' badminton')}" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.05 0 12 0 12s0 3.95.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.95 24 12 24 12s0-3.95-.5-5.81zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>Search YouTube</a>`;
+}
+
+// ═══ DRILL LIBRARY ═══
+function saveDrill(btn, exJson){
+  let ex;
+  try { ex=JSON.parse(exJson); } catch(e){ return; }
+  const exists=drillLib.some(d=>d.name===ex.name&&d.overview===ex.overview);
+  if(exists){ toast('Exercise already saved'); return; }
+  ex._savedAt=new Date().toISOString();
+  ex._level=st.level;
+  ex._age=st.age;
+  drillLib.unshift(ex);
+  localStorage.setItem('shuttleLib',JSON.stringify(drillLib));
+  btn.textContent='✓ Saved to library';
+  btn.classList.add('saved');
+  toast('✓ Exercise saved to library');
+}
+
+function deleteDrill(idx){
+  drillLib.splice(idx,1);
+  localStorage.setItem('shuttleLib',JSON.stringify(drillLib));
+  renderLibrary();
+}
+
+function setLibFilter(btn,f){
+  document.querySelectorAll('.lib-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  libFilter=f;
+  renderLibrary();
+}
+
+function renderLibrary(){
+  const q=(document.getElementById('libSearch')?.value||'').toLowerCase();
+  let items=drillLib.filter(d=>{
+    const matchType=libFilter==='all'||d.type===libFilter;
+    const matchQ=!q||d.name?.toLowerCase().includes(q)||d.overview?.toLowerCase().includes(q)||(d.targetShots||[]).some(s=>s.toLowerCase().includes(q));
+    return matchType&&matchQ;
+  });
+  document.getElementById('libCountBadge').textContent=`${drillLib.length} exercise${drillLib.length!==1?'s':''}`;
+  const grid=document.getElementById('libGrid');
+  if(items.length===0){
+    grid.innerHTML=`<div class="lib-empty"><span class="lib-empty-icon">${drillLib.length===0?'📚':'🔍'}</span><p>${drillLib.length===0?'Your library is empty.<br>Generate a plan and save exercises from there.':'No exercises match your search.'}</p></div>`;
+    return;
+  }
+  grid.innerHTML=`<div class="lib-grid">${items.map((d,i)=>{
+    const realIdx=drillLib.indexOf(d);
+    const tc=d.type||'drill';
+    const tagColor={warmup:'color:var(--accent3);border-color:rgba(249,115,22,0.4)',drill:'color:var(--accent2);border-color:rgba(74,222,128,0.4)',team:'color:var(--accent);border-color:rgba(245,197,24,0.4)',game:'color:var(--accent);border-color:rgba(245,197,24,0.4)',cooldown:'color:var(--muted);border-color:rgba(107,154,120,0.4)'}[tc]||'';
+    const date=d._savedAt?new Date(d._savedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'';
+    return `<div class="lib-card" onclick="openDrillDetail(${realIdx})">
+      <div class="lib-card-top">
+        <div class="lib-card-name">${escH(d.name)}</div>
+        <button class="lib-card-del" onclick="event.stopPropagation();deleteDrill(${realIdx})" title="Delete">✕</button>
+      </div>
+      <div class="lib-card-tags">
+        <span class="lib-card-tag" style="${tagColor}">${escH(TYPE_LABELS[tc]||tc)}</span>
+        ${d._level?`<span class="lib-card-tag" style="color:var(--muted);border-color:var(--border)">${escH(d._level)}</span>`:''}
+        ${d._age?`<span class="lib-card-tag" style="color:var(--muted);border-color:var(--border)">${escH(d._age)} yrs</span>`:''}
+        ${(d.targetShots||[]).slice(0,2).map(s=>`<span class="lib-card-tag" style="color:var(--accent2);border-color:rgba(74,222,128,0.3)">${escH(s)}</span>`).join('')}
+      </div>
+      <div class="lib-card-overview">${escH(d.overview||'')}</div>
+      <div class="lib-card-meta">
+        <span class="lib-card-sets">${escH(d.sets||'')}</span>
+        ${d.location?`<span style="font-size:10px;color:var(--muted)">📍 ${escH(d.location)}</span>`:''}
+        <span class="lib-card-date">${date}</span>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function openDrillDetail(idx){
+  const d=drillLib[idx];
+  if(!d)return;
+  const tc=d.type||'drill';
+  const isGrp=tc==='team'||tc==='game';
+  const stepsHTML=(d.steps||[]).map((s,si)=>`<li><span class="snum">${si+1}</span><span>${escH(s)}</span></li>`).join('');
+  document.getElementById('drillModalContent').innerHTML=`
+    <button class="modal-close-btn" onclick="closeDrillModal()">✕</button>
+    <div class="modal-title">${escH(d.name)}</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+      <span class="ex-tag ${tc}">${isGrp?'👥 ':''}${escH(TYPE_LABELS[tc]||tc)}</span>
+      ${d.location?`<span class="ex-loc">📍 ${escH(d.location)}</span>`:''}
+      ${d.sets?`<span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent)">${escH(d.sets)}</span>`:''}
+    </div>
+    <p class="ex-overview" style="margin-bottom:16px">${escH(d.overview||'')}</p>
+    <div class="ex-steps-hdr">Step-by-step</div>
+    <ul class="ex-steps" style="margin-bottom:16px">${stepsHTML}</ul>
+    ${d.coachingCue?`<div class="ex-cue" style="margin-bottom:12px"><div class="ex-cue-lbl">🎯 Coach's Cue</div><p>${escH(d.coachingCue)}</p></div>`:''}
+    ${d.teamNote?`<div class="ex-team-note"><div class="ex-team-lbl">👥 Team Dynamics</div><p>${escH(d.teamNote)}</p></div>`:''}
+    ${d.videoSearchQuery?`<div style="margin-top:16px"><a class="yt-big-btn" href="https://www.youtube.com/results?search_query=${encodeURIComponent(d.videoSearchQuery+' badminton')}" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.05 0 12 0 12s0 3.95.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.95 24 12 24 12s0-3.95-.5-5.81zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>Search YouTube</a></div>`:''}
+    <button onclick="deleteDrill(${idx});closeDrillModal();" style="margin-top:16px;padding:7px 14px;background:transparent;border:1px solid rgba(248,113,113,0.4);color:var(--danger);border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;transition:all 0.15s" onmouseover="this.style.background='rgba(248,113,113,0.1)'" onmouseout="this.style.background='transparent'">✕ Remove from library</button>`;
+  document.getElementById('drillModal').classList.add('show');
+}
+function closeDrillModal(){document.getElementById('drillModal').classList.remove('show');}
+document.getElementById('drillModal').addEventListener('click',e=>{if(e.target===document.getElementById('drillModal'))closeDrillModal();});
+</script>
+</body>
+</html>
